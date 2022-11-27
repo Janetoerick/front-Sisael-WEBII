@@ -1,0 +1,15 @@
+import { StyleSheet } from "react-native";
+
+const space_cadet = "#171738"
+const Midnight_Blue = "#2E1760"
+const Blue_Pantone = "#3423A6"
+const Glaucous = "#7180B9"
+const Honeydew = "#DFF3E4"
+
+const styles = StyleSheet.create({
+    barOptions:{
+        backgroundColor:"#171738",
+    }
+});
+
+export default styles

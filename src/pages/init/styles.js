@@ -1,10 +1,17 @@
 import { StyleSheet } from "react-native";
 
+const purple_navy = "#655A7C"
+const glosy_grape = "#AB92BF"
+const black_chocolate = "#1E2019"
+const blizzard_blue = "#AEECEF"
+const blue_munsell = "#1985A1"
+
 const styles = StyleSheet.create({
     formContext:{
         flex:1,
         backgroundColor:"#FFFFFF",
         alignItems:"center",
+        width:"100%",
         height:"100%",
         paddingTop:60,
     },
@@ -13,7 +20,7 @@ const styles = StyleSheet.create({
         height:"auto",
     },
     labelForm:{
-        color:"#2BD9FE",
+        color:blue_munsell,
         fontSize:26,
         textAlign:"center",
         fontWeight:"bold",
@@ -33,28 +40,29 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         width:"90%",
-        backgroundColor:"#2BD9FE",
+        backgroundColor:blue_munsell,
         paddingTop:14,
         paddingBottom:14,
         marginLeft:12,
         marginTop:30,
+    },
+    buttonText:{
+        color:"white",
     },
     viewCadastro:{
         flex:1,
         width:"100%",
         height:"auto",
         justifyContent:"flex-end",
-
-        
     },
     textCadastro:{
         textAlign:"center",
         paddingBottom:10,
         paddingTop:10,
-        backgroundColor:"#2BD9FE"
+        backgroundColor:"#FBFBFB"
     },
     linkCadastro:{
-        color:"#88D18A"
+        color:blue_munsell,
     },
     textErro:{
         color:"#FCB0B3",
@@ -64,10 +72,15 @@ const styles = StyleSheet.create({
     formContextCadastro:{
         flex:1,
         backgroundColor:"#FFFFFF",
+        justifyContent:"center",
         alignItems:"center",
-        height:"100%",
-        paddingTop:60,
-    }
+        width:"100%",
+    },
+    formCadastro:{
+        height:"auto",
+        width:"100%",
+        alignItems:"center",
+    },
 });
 
 export default styles

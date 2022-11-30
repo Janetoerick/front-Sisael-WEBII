@@ -18,7 +18,7 @@ export default function Login({ navigation }) {
                 setErro("Preencha os campos login e senha!");
                 return
             }
-            const uri = 'http://192.168.1.68:8080/usuario/auth'
+            const uri = 'http://192.168.1.75:8080/usuario/auth'
             const response = await fetch(uri, {
                 method: 'POST',
                 headers: {

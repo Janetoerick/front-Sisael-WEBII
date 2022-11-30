@@ -23,7 +23,7 @@ export default function Cadastro({ navigation }){
                return
            }
 
-            const uri = 'http://192.168.1.68:8080/usuario'
+            const uri = 'http://192.168.1.75:8080/usuario'
             const response = await fetch(uri, {
                 method: 'POST',
                 headers: {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { View, Text, SafeAreaView, TextInput, TouchableOpacity } from 'react-native'
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePicker from '@react-native-community/datetimepicker'
 import styles from './styles'
 
 
@@ -22,7 +22,6 @@ export default function EditReserva({ navigation, route }) {
     const [erro, setErro] = useState(null)
 
     function refatorarHorario(horario) {
-
         var h = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() + "T"
         //console.log("-----------------------------------")
         //console.log("h---> " + h)
@@ -155,11 +154,6 @@ export default function EditReserva({ navigation, route }) {
     const showMode = (currentMode) => {
         setShow(true)
         setMode("date")
-        // if (currentMode === 'date') {
-        //     console.log("1-> " + show)
-        //     setShow(true)
-        //     console.log("2-> " + show)
-        // } else 
         if (currentMode === 'timeI') {
             setShowTimeI(true)
             setMode("time")
@@ -167,7 +161,6 @@ export default function EditReserva({ navigation, route }) {
             setMode("time")
             setShowTimeF(true)
         }
-        //console.log(route.params.reserva)
     }
 
     return (

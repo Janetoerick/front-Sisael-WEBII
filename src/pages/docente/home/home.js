@@ -6,7 +6,7 @@ import styles from './styles'
 
 import { Feather } from '@expo/vector-icons'
 
-    //'8', '2022-12-20', '05:00:00', '01:00:00', '11'
+//'8', '2022-12-20', '05:00:00', '01:00:00', '11'
 
 export default function HomeDocente({ navigation, route }) {
 
@@ -179,10 +179,27 @@ export default function HomeDocente({ navigation, route }) {
                 <Text style={styles.labelAgendar}>Agende um equipamento</Text>
                 <Text style={styles.textModulo}>Agende equipamentos em um laboratório de maneira rápida
                     e fácil.</Text>
-                <TouchableOpacity style={styles.button}
-                >
-                    <Text style={styles.buttonText}>Agendar</Text>
-                </TouchableOpacity>
+                {qntReservaIndividial
+                    ?
+                    <TouchableOpacity style={styles.button}
+                    disabled={false}
+                        onPress={() => {
+                            navigation.navigate("Adicionar reserva",
+                                {
+                                    credentials: route.params.credentials
+                                })
+                        }}
+                    >
+                        <Text style={styles.buttonText}>Agendar</Text>
+                    </TouchableOpacity>
+                    :
+                    <TouchableOpacity style={styles.button}
+                    disabled={true}
+                    >
+                        <Text style={styles.buttonTextDisable}>Agendar</Text>
+                    </TouchableOpacity>
+                }
+
             </View>
             <View style={styles.moduloVisualizar}>
                 <View style={styles.textVisualizar}>
@@ -308,7 +325,7 @@ export default function HomeDocente({ navigation, route }) {
                                 <TouchableOpacity style={styles.buttonModalDeleteFechar}
                                     onPress={() => { viewModalDelete() }}
                                 >
-                                    <Text style={{ color: "white" }}>Fechar</Text>
+                                    <Text style={{ color: "white" }}>Cancelar</Text>
                                 </TouchableOpacity>
                             </View>
 

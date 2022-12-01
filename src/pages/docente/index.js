@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import HomeDocente from './home/home'
 import ConfigDocente from './configuracoes/configuracoes'
 import EditReserva from './home/editReserva/editReserva'
+import AddReserva from './home/addReserva'
 
 import { Feather } from '@expo/vector-icons'
 
@@ -19,6 +20,7 @@ function HomePages({ route }) {
             component={HomeDocente} 
             options={{ headerShown: false }} />
             <Stack.Screen name="Editar reserva" component={EditReserva}/>
+            <Stack.Screen name="Adicionar reserva" component={AddReserva}/>
         </Stack.Navigator>
     )
 

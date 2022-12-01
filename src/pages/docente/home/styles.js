@@ -60,6 +60,10 @@ const styles = StyleSheet.create({
         paddingBottom:14,
         marginTop:30,
     },
+    buttonTextDisable:{
+        color:"#535154aa",
+        fontSize:20,
+    },
     buttonText:{
         color:"white",
         fontSize:20,

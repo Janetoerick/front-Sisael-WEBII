@@ -6,7 +6,7 @@ import styles from './styles'
 
 export default function EditReserva({ navigation, route }) {
 
-    const [date, setDate] = useState(new Date(route.params.reserva.data));
+    const [date, setDate] = useState(new Date(dateInit(route.params.reserva.data)));
     const [dateText, setDateText] = useState(refatorarData(route.params.reserva.data));
     const [horaI, setHoraI] = useState(new Date(refatorarHorario(route.params.reserva.horarioInicial)))
     const [textHoraI, setTextHoraI] = useState(route.params.reserva.horarioInicial.slice(0, 5))
@@ -21,16 +21,27 @@ export default function EditReserva({ navigation, route }) {
 
     const [erro, setErro] = useState(null)
 
+    function dateInit(date) {
+        let Dateset = date.slice(0, 4) + "-"
+        if (date.slice(5) == "-") {
+            Dateset += "0" + date.slice(5, 7) + "-"
+        } else {
+            Dateset += date.slice(5, 7) + "-"
+        }
+        if (date.slice(8) == "-") {
+            Dateset += "0" + date.slice(8, 10) + "T12:00:00"
+        } else {
+            Dateset += date.slice(8, 10) + "T12:00:00"
+        }
+
+        return Dateset
+    }
+
     function refatorarHorario(horario) {
         var h = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() + "T"
-        //console.log("-----------------------------------")
-        //console.log("h---> " + h)
         h += horario.slice(0, 5)
-        //console.log("h---> " + h)
 
-        let x = Date.parse(h)
-        //console.log("x---> " + x)
-        return x
+        return h
     }
     function refatorarData(data) {
         let r = ""
@@ -46,7 +57,7 @@ export default function EditReserva({ navigation, route }) {
     function equipamentosReserva() {
         let equipamentos = ""
         route.params.reserva.equipamentos.forEach(element => {
-            if(equipamentos !== ""){
+            if (equipamentos !== "") {
                 equipamentos += ", "
             }
             equipamentos += element.id.toString()
@@ -58,8 +69,6 @@ export default function EditReserva({ navigation, route }) {
         setShow(false)
         if (showTimeI) {
             const currentDate = selectedDate || horaI;
-
-
 
             let fTime
             if (currentDate.getHours() < 10) {
@@ -73,17 +82,13 @@ export default function EditReserva({ navigation, route }) {
             } else {
                 fTime += ':' + currentDate.getMinutes()
             }
-            //console.log(fTime)
             setTextHoraI(fTime)
-            //console.log(horaI)
             let d = refatorarHorario(fTime)
-            //console.log("d=> " + d)
             setHoraI(d)
             setShowTimeI(false)
         } else if (showTimeF) {
             const currentDate = selectedDate || horaF;
 
-            //console.log(currentDate)
 
             let fTime
             if (currentDate.getHours() < 10) {
@@ -102,38 +107,71 @@ export default function EditReserva({ navigation, route }) {
             setHoraF(new Date(refatorarHorario(fTime)))
 
 
-            //console.log(fTime)
             setShowTimeF(false)
         } else if (show) {
             const currentDate = selectedDate || date;
 
-            let fDate = currentDate.getDate() + '/' + (currentDate.getMonth() + 1) + '/' + currentDate.getFullYear()
-            let Dateset = currentDate.getFullYear() + "-" + (currentDate.getMonth() + 1) + "-" + (currentDate.getDate() + 1)
+            let fDate = ""
+            if (currentDate.getDate() < 10) {
+                fDate += '0' + currentDate.getDate() + '/'
+            } else {
+                fDate += currentDate.getDate() + '/'
+            }
+
+            if (currentDate.getMonth() < 9) {
+                fDate += "0" + (currentDate.getMonth() + 1) + "/" + currentDate.getFullYear()
+            } else {
+                fDate = fDate + (currentDate.getMonth() + 1) + "/" + currentDate.getFullYear()
+            }
+
+            let Dateset = currentDate.getFullYear() + "-"
+            if (currentDate.getMonth() < 9) {
+                Dateset += "0" + (currentDate.getMonth() + 1) + "-"
+            } else {
+                Dateset += (currentDate.getMonth() + 1) + "-"
+            }
+            if (currentDate.getDate() < 10) {
+                Dateset += "0" + currentDate.getDate() + "T12:00:00"
+            } else {
+                Dateset += currentDate.getDate() + "T12:00:00"
+            }
+
             setDate(new Date(Dateset))
             setDateText(fDate)
 
-            //console.log(Dateset)
         }
+    }
+
+    const showMode = (currentMode) => {
+        if (currentMode === 'date') {
+            setMode("date")
+        } else if (currentMode === 'timeI') {
+            setMode("time")
+            setShowTimeI(true)
+        } else if (currentMode === 'timeF') {
+            setMode("time")
+            setShowTimeF(true)
+        }
+        setShow(true)
     }
 
     const attReserva = async () => {
         try {
-            let data = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
-            
-            console.log(textHoraI)
-            console.log(textHoraF)
-            console.log(data)
-            
+
+            // console.log(textHoraI)
+            // console.log(textHoraF)
+            // console.log(data)
+
             const uri = 'http://192.168.1.75:8080/reservaIndividual/' + route.params.reserva.id
             const response = await fetch(uri, {
                 method: 'PUT',
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer '+ route.params.credentials.token
+                    'Authorization': 'Bearer ' + route.params.credentials.token
                 },
                 body: JSON.stringify({
-                    data: data,
+                    data: date,
                     horarioInicial: textHoraI,
                     horarioFinal: textHoraF,
                 })
@@ -151,17 +189,6 @@ export default function EditReserva({ navigation, route }) {
         }
     }
 
-    const showMode = (currentMode) => {
-        setShow(true)
-        setMode("date")
-        if (currentMode === 'timeI') {
-            setShowTimeI(true)
-            setMode("time")
-        } else if (currentMode === 'timeF') {
-            setMode("time")
-            setShowTimeF(true)
-        }
-    }
 
     return (
         <SafeAreaView style={styles.page}>
@@ -189,7 +216,7 @@ export default function EditReserva({ navigation, route }) {
                         <Text style={styles.valueInputUpdate}>{textHoraI}</Text>
                     </View>
                 </TouchableOpacity>
-                    <TouchableOpacity style={styles.input}
+                <TouchableOpacity style={styles.input}
                     onPress={() => {
                         showMode('timeF')
                     }
@@ -227,7 +254,7 @@ export default function EditReserva({ navigation, route }) {
 
                 <Text style={styles.erroText}>{erro}</Text>
                 <TouchableOpacity style={styles.button}
-                onPress={attReserva}
+                    onPress={attReserva}
                 >
                     <Text style={styles.buttonText}>Atualizar</Text>
                 </TouchableOpacity>

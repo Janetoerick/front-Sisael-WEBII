@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, SafeAreaView, TouchableOpacity } from 'react-native'
 import DateTimePicker from '@react-native-community/datetimepicker'
+import { SelectList } from 'react-native-dropdown-select-list'
 import styles from './styles'
 
 import { Feather } from '@expo/vector-icons'
@@ -21,6 +22,13 @@ export default function AddReservaDateTime({ navigation, navigation: { goBack },
     const [showTimeF, setShowTimeF] = useState(false)
 
     const [erro, setErro] = useState(null)
+
+    const [qntEquipamentos, setQntEquipamentos] = useState("")
+
+    const dataQntEquipamentos = [
+        { key: '1', value: '1' },
+        { key: '2', value: '2' },
+    ]
 
     function refatorarHorario(horario) {
         var h = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() + "T"
@@ -44,8 +52,6 @@ export default function AddReservaDateTime({ navigation, navigation: { goBack },
         setShow(false)
         if (showTimeI) {
             const currentDate = selectedDate || horaI;
-
-
 
             let fTime
             if (currentDate.getHours() < 10) {
@@ -88,8 +94,31 @@ export default function AddReservaDateTime({ navigation, navigation: { goBack },
         } else if (show) {
             const currentDate = selectedDate || date;
 
-            let fDate = currentDate.getDate() + '/' + (currentDate.getMonth() + 1) + '/' + currentDate.getFullYear()
-            let Dateset = currentDate.getFullYear() + "-" + (currentDate.getMonth() + 1) + "-" + (currentDate.getDate() + 1)
+            let fDate = ""
+            if (currentDate.getDate() < 10) {
+                fDate += '0' + currentDate.getDate() + '/'
+            } else {
+                fDate += currentDate.getDate() + '/'
+            }
+
+            if (currentDate.getMonth() < 9) {
+                fDate += "0" + (currentDate.getMonth() + 1) + "/" + currentDate.getFullYear()
+            } else {
+                fDate = fDate + (currentDate.getMonth() + 1) + "/" + currentDate.getFullYear()
+            }
+
+            let Dateset = currentDate.getFullYear() + "-" 
+            if(currentDate.getMonth() < 9){
+                Dateset += "0" + (currentDate.getMonth() + 1) + "-"
+            } else {
+                Dateset += (currentDate.getMonth() + 1) + "-"
+            }
+            if(currentDate.getDate() < 10){
+                Dateset += "0" + currentDate.getDate() + "T12:00:00"
+            } else {
+                Dateset += currentDate.getDate() + "T12:00:00"
+            }
+            
             setDate(new Date(Dateset))
             setDateText(fDate)
 
@@ -97,34 +126,71 @@ export default function AddReservaDateTime({ navigation, navigation: { goBack },
     }
 
     const showMode = (currentMode) => {
-        setShow(true)
-        setMode("date")
-        if (currentMode === 'timeI') {
-            console.log("entrou no timeI")
-            setShowTimeI(true)
+        if(currentMode === 'date'){
+            setMode("date")
+        } else if (currentMode === 'timeI') {
             setMode("time")
+            setShowTimeI(true)
         } else if (currentMode === 'timeF') {
-            console.log("entrou no timeF")
             setMode("time")
             setShowTimeF(true)
         }
+        setShow(true)
     }
 
     const saveReserva = async () => {
-        try{
+        if (qntEquipamentos == "" || dateText == "Data" ||
+            textHoraI == "Horário de início" || textHoraF == "Horário de fim") {
+            setErro("Preencha todos os campos")
+        } else {
+            try {
+                setErro("")
+                const uri = 'http://192.168.1.75:8080/reservaIndividual/'
+                const response = await fetch(uri, {
+                    method: 'POST',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + route.params.credentials.token
+                    },
+                    body: JSON.stringify({
+                        data: date,
+                        horarioInicial: textHoraI,
+                        horarioFinal: textHoraF,
+                        aluno: route.params.credentials.login,
+                        sala: route.params.sala,
+                        qntEquipamentos: qntEquipamentos,
+                    })
+                });
+                const res = await response.json();
+                if (res.error == null) {
+                    navigation.navigate("Principal", {
+                        credentials: route.params.credentials,
+                        att: "addReserva"
+                    })
+                } else {
+                    setErro(res.message)
+                }
 
-        }catch(erro){
-            console.log(erro)
-        } finally{
-            navigation.navigate("Principal",{
-                credentials: route.params.credentials
-            })
+            } catch (erro) {
+                console.error(erro)
+            }
         }
     }
 
     return (
         <SafeAreaView style={styles.page}>
             <View style={styles.container}>
+
+                <SelectList data={dataQntEquipamentos}
+                    setSelected={(val) =>
+                        setQntEquipamentos(val)
+                    }
+                    placeholder="Quantidade de computadores"
+                    maxHeight={100}
+                    boxStyles={{ width: "70%" }}
+                    inputStyles={{ width: "100%" }}
+                />
                 <TouchableOpacity style={styles.input}
                     onPress={() => {
                         showMode('date')
@@ -155,6 +221,7 @@ export default function AddReservaDateTime({ navigation, navigation: { goBack },
                         <Text style={styles.valueInputUpdate}>{textHoraF}</Text>
                     </View>
                 </TouchableOpacity>
+                <Text style={styles.textErro}>{erro}</Text>
                 <View style={styles.viewButtons}>
                     <TouchableOpacity style={styles.buttonBack}
                         onPress={() => {

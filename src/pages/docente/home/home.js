@@ -32,19 +32,14 @@ export default function HomeDocente({ navigation, route }) {
     const [nomeTurma, setNomeTurma] = useState(null)
     const [equipamentos, setEquipamentos] = useState(null)
 
-    const [teste, setTeste] = useState(null)
+    const [att, setAtt] = useState(route.params.att)
 
 
     useEffect(() => {
         list_reservas_grupal()
         reserva_individual()
+    }, [route]);
 
-        loadingGrupal
-        loadingIndividual
-        modalDelete
-
-
-    });
 
     const list_reservas_grupal = async () => {
         try {
@@ -115,6 +110,7 @@ export default function HomeDocente({ navigation, route }) {
             console.error(error)
         } finally {
             viewModalDelete()
+            reserva_individual()
         }
     }
 
@@ -149,7 +145,7 @@ export default function HomeDocente({ navigation, route }) {
             setNomeSala(reserva.nome_sala)
             setLocalSala(reserva.local_sala)
             reserva.equipamentos.forEach(element => {
-                if (equipamentos === null) {
+                if (equipamentos == null) {
                     setEquipamentos(element.id)
                 } else {
                     setEquipamentos(equipamentos + ", " + element.id)

@@ -1,10 +1,33 @@
 import React from 'react'
-import { View, Text, SafeAreaView } from 'react-native'
+import { View, Text, SafeAreaView, TouchableOpacity } from 'react-native'
+import styles from './styles'
 
-export default function ConfigDocente(){
+import { Feather } from '@expo/vector-icons'
+
+export default function ConfigDocente({ navigation, route }) {
     return (
-        <SafeAreaView>
-            <Text>Configurações</Text>
+        <SafeAreaView style={styles.page}>
+            <View style={styles.modulo}>
+                <View style={styles.moduloPerfil}>
+                    <Feather name="user" size={30} />
+                    <Text style={styles.textLogin}>{route.params.credentials.login}</Text>
+                </View>
+                <View style={styles.moduloButtons}>
+
+
+                    <TouchableOpacity style={styles.button} 
+                    disabled={true}
+                    onPress={() => {
+                        navigation.navigate("Alterar senha", {
+                            credentials: route.params.credentials
+                        })
+                    }}
+                    >
+                        <Text style={styles.buttonText}>Alterar senha</Text>
+                    </TouchableOpacity>
+                </View>
+
+            </View>
         </SafeAreaView>
     )
 }

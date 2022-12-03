@@ -6,6 +6,7 @@ import HomeDocente from './home/home'
 import ConfigDocente from './configuracoes/configuracoes'
 import EditReserva from './home/editReserva/editReserva'
 import AddReserva from './home/addReserva'
+import EditSenhaDocente from './configuracoes/editSenha'
 
 import { Feather } from '@expo/vector-icons'
 
@@ -21,6 +22,20 @@ function HomePages({ route }) {
             options={{ headerShown: false }} />
             <Stack.Screen name="Editar reserva" component={EditReserva}/>
             <Stack.Screen name="Adicionar reserva" component={AddReserva}/>
+        </Stack.Navigator>
+    )
+
+}
+
+function ConfigPages({ route }) {
+    return (
+        <Stack.Navigator>
+            <Stack.Screen name="PrincipalConfig" 
+            initialParams={{ credentials: route.params.credentials }} 
+            component={ConfigDocente} 
+            options={{ headerShown: false }} />
+            <Stack.Screen name="Alterar senha" component={EditSenhaDocente}/>
+            {/* <Stack.Screen name="Adicionar reserva" component={AddReserva}/> */}
         </Stack.Navigator>
     )
 
@@ -53,7 +68,7 @@ export default function Docente({ route }) {
             />
             <Tab.Screen
                 name="Configurações"
-                component={ConfigDocente}
+                component={ConfigPages}
                 initialParams={{ credentials: route.params }}
                 options={{
                     tabBarIcon: ({ color, size, focused }) => {

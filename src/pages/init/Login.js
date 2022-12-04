@@ -40,14 +40,20 @@ export default function Login({ navigation }) {
                 setErro(null)
                 setLogin(null)
                 if (credentials.typeUser == "admin") {
-                    navigation.navigate('Admin', { credentials: credentials });
+                    navigation.navigate('Admin', {
+                        login: credentials.login,
+                        token: credentials.token,
+                        typeUser: credentials.typeUser });
                 } else if (credentials.typeUser == "aluno") {
-                    navigation.navigate('Docente', {
+                    navigation.navigate('Discente', {
                         login: credentials.login,
                         token: credentials.token,
                         typeUser: credentials.typeUser });
                 } else if (credentials.typeUser == "professor") {
-
+                    navigation.navigate('Docente', {
+                        login: credentials.login,
+                        token: credentials.token,
+                        typeUser: credentials.typeUser });
                 }
 
             }

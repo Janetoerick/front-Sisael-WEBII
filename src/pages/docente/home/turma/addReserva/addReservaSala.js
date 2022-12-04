@@ -51,6 +51,7 @@ export default function AddReservaSala({ navigation, navigation: {goBack}, route
         if (selectedSala != "") {
             navigation.navigate("findDateTime", {
                 credentials: route.params.credentials,
+                turma: route.params.turma,
                 sala: selectedSala
             })
         } else {
@@ -66,7 +67,7 @@ export default function AddReservaSala({ navigation, navigation: {goBack}, route
                     setSelected={(val) =>
                         setSelectedSala(val)
                     }
-                    placeholder="Selecione o local"
+                    placeholder="Selecione a sala"
                     maxHeight={150}
                     boxStyles={{ width: "70%" }}
                     inputStyles={{ width: "100%" }}

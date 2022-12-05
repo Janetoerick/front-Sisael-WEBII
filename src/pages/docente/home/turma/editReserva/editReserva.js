@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { View, Text, SafeAreaView, TextInput, TouchableOpacity } from 'react-native'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import styles from './styles'
+import { ip } from '../../../../../../infos'
 
 
 export default function EditReserva({ navigation, route }) {
@@ -152,7 +153,7 @@ export default function EditReserva({ navigation, route }) {
             // console.log(textHoraF)
             // console.log(data)
 
-            const uri = 'http://192.168.1.75:8080/reservaGrupal/' + route.params.reserva.id
+            const uri = ip + '/reservaGrupal/' + route.params.reserva.id
             const response = await fetch(uri, {
                 method: 'PUT',
                 headers: {

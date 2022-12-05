@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { View, Text, SafeAreaView, TouchableOpacity, FlatList, ActivityIndicator, Modal, Button } from 'react-native'
 
 import styles from './styles'
+import { ip } from '../../../../infos'
 
 import { Feather } from '@expo/vector-icons'
 
@@ -21,7 +22,7 @@ export default function HomeDocente({ navigation, route }) {
     const list_turmas = async () => {
         try {
             setLoadingTurmas(true)
-            const uri = 'http://192.168.1.75:8080/turma/professor/' + route.params.credentials.login
+            const uri = ip + '/turma/professor/' + route.params.credentials.login
             const response = await fetch(uri, {
                 method: 'GET',
                 headers: {

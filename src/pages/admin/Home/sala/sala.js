@@ -3,6 +3,7 @@ import { View, Text, SafeAreaView, TouchableOpacity, FlatList, ActivityIndicator
 
 import { Feather } from '@expo/vector-icons'
 import styles from './styles'
+import { ip } from '../../../../../infos'
 
 export default function PageSala({ navigation, route }) {
 
@@ -20,7 +21,7 @@ export default function PageSala({ navigation, route }) {
     const list_Equipamentos = async () => {
         try {
             setLoadingEquipamentos(true)
-            const uri = 'http://192.168.1.75:8080/sala/' + route.params.sala.id
+            const uri = ip + '/sala/' + route.params.sala.id
             const response = await fetch(uri, {
                 method: 'GET',
                 headers: {
@@ -45,7 +46,7 @@ export default function PageSala({ navigation, route }) {
 
     const deleteEquipamento = async () => {
         try {
-            const uri = 'http://192.168.1.75:8080/equipamento/' + equipamentoDelete
+            const uri = ip + '/equipamento/' + equipamentoDelete
             const response = await fetch(uri, {
                 method: 'DELETE',
                 headers: {

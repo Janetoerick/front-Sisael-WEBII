@@ -3,10 +3,8 @@ import React, { useState, useEffect } from 'react'
 import { View, Text, SafeAreaView, TouchableOpacity, FlatList, ActivityIndicator, Modal, Button } from 'react-native'
 
 import styles from './styles'
+import { ip } from '../../../../infos'
 
-import { Feather } from '@expo/vector-icons'
-
-//'8', '2022-12-20', '05:00:00', '01:00:00', '11'
 
 export default function ReservasDocente({ navigation, route }) {
 
@@ -32,7 +30,7 @@ export default function ReservasDocente({ navigation, route }) {
 
     const list_reservas_grupal = async () => {
         try {
-            const uri = 'http://192.168.1.75:8080/reservaGrupal/professor/' + route.params.credentials.login
+            const uri = ip + '/reservaGrupal/professor/' + route.params.credentials.login
             const response = await fetch(uri, {
                 method: 'GET',
                 headers: {
@@ -54,9 +52,9 @@ export default function ReservasDocente({ navigation, route }) {
     }
 
 
-    const deleteReserva = async () => { // refazer <-------------------------------------------
+    const deleteReserva = async () => {
         try {
-            const uri = 'http://192.168.1.75:8080/reservaGrupal/'
+            const uri = ip + '/reservaGrupal/'
             const response = await fetch(uri, {
                 method: 'DELETE',
                 headers: {

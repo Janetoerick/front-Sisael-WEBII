@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text, Pressable, TextInput, Keyboard, TouchableOpacity } from 'react-native'
 import styles from './styles'
+import { ip } from '../../../infos'
 
 export default function Cadastro({ navigation }){
 
@@ -23,7 +24,7 @@ export default function Cadastro({ navigation }){
                return
            }
 
-            const uri = 'http://192.168.1.75:8080/usuario'
+            const uri = ip + '/usuario'
             const response = await fetch(uri, {
                 method: 'POST',
                 headers: {
@@ -39,7 +40,6 @@ export default function Cadastro({ navigation }){
             });
             const credentials = await response.json();
             setErro(null)
-            console.log(credentials.login)
             if(credentials.error == null){
                 navigation.navigate('Login', { login: credentials.login });
             } else {

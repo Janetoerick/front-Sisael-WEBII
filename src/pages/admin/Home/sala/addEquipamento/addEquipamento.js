@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, SafeAreaView, TouchableOpacity, TextInput } from 'react-native'
 import styles from './styles'
+import { ip } from '../../../../../../infos'
 
 import { Feather } from '@expo/vector-icons'
 
@@ -17,7 +18,7 @@ export default function AddEquipamento({ navigation, route }) {
         } else {
             try {
                 setErro("")
-                const uri = 'http://192.168.1.75:8080/equipamento/'
+                const uri = ip + '/equipamento/'
                 const response = await fetch(uri, {
                     method: 'POST',
                     headers: {

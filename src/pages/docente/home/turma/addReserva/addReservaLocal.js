@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { View, Text, SafeAreaView, TouchableOpacity } from 'react-native'
 import { SelectList } from 'react-native-dropdown-select-list'
 import styles from './styles'
+import { ip } from '../../../../../../infos'
 
 import { Feather } from '@expo/vector-icons'
 
@@ -24,7 +25,7 @@ export default function AddReservaLocal({ navigation, route }) {
 
     const findLocaisESalas = async () => {
         try {
-            const uri = 'http://192.168.1.75:8080/sala/'
+            const uri = ip + '/sala/'
             const response = await fetch(uri, {
                 method: 'GET',
                 headers: {
@@ -36,16 +37,17 @@ export default function AddReservaLocal({ navigation, route }) {
             const res = await response.json();
 
             let list = localSala
+            let locais = []
             if (list.length == 0) {
                 res.forEach(element => {
                     let temp = { key: element.local, value: element.local }
-                    if (!(temp in list)) {
+                    if (!(locais.includes(temp.value))) {
                         list.push(temp)
+                        locais.push(temp.value)
                         setLocalSala(list)
                     }
                 });
                 list = localSala
-                //console.log(localSala)
             }
 
         } catch (error) {

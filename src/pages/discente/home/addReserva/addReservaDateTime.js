@@ -3,6 +3,7 @@ import { View, Text, SafeAreaView, TouchableOpacity } from 'react-native'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { SelectList } from 'react-native-dropdown-select-list'
 import styles from './styles'
+import { ip } from '../../../../../infos'
 
 import { Feather } from '@expo/vector-icons'
 
@@ -145,7 +146,7 @@ export default function AddReservaDateTime({ navigation, navigation: { goBack },
         } else {
             try {
                 setErro("")
-                const uri = 'http://192.168.1.75:8080/reservaIndividual/'
+                const uri = ip + '/reservaIndividual/'
                 const response = await fetch(uri, {
                     method: 'POST',
                     headers: {

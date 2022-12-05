@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { View, Text, TouchableOpacity, Pressable, Keyboard, SafeAreaView, ActivityIndicator } from 'react-native'
 import { TextInput } from 'react-native-gesture-handler'
 import styles from "./styles"
+import { ip } from '../../../infos'
 
 export default function Login({ navigation }) {
 
@@ -18,7 +19,7 @@ export default function Login({ navigation }) {
                 setErro("Preencha os campos login e senha!");
                 return
             }
-            const uri = 'http://192.168.1.75:8080/usuario/auth'
+            const uri = ip + '/usuario/auth'
             const response = await fetch(uri, {
                 method: 'POST',
                 headers: {
@@ -94,7 +95,7 @@ export default function Login({ navigation }) {
                                 setErro("")
                                 navigation.navigate('Cadastrar usuário')
                             }}
-                        > Castastrar</Text>
+                        > Castastrar </Text>
                     </Text>
                 </View>
             </Pressable >

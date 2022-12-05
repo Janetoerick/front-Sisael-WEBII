@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text, SafeAreaView, TouchableOpacity, TextInput } from 'react-native'
 import styles from './styles'
+import { ip } from '../../../../infos'
 
 export default function EditSenhaDiscente({ navigation, route }) {
 
@@ -12,13 +13,8 @@ export default function EditSenhaDiscente({ navigation, route }) {
 
     const editSenha = async () => {
 
-        console.log("login: " + route.params.credentials.login +
-            "\nsenha_atual: " + senhaAtual +
-            "\nnova_senha: " + novaSenha +
-            "\nconfirmar_senha: " + confirmarSenha +
-            "\ntypeUser: aluno")
         try {
-            const uri = 'http://192.168.1.75:8080/configUser/password'
+            const uri = ip + '/configUser/password'
             const response = await fetch(uri, {
                 method: 'PUT',
                 headers: {
@@ -35,7 +31,6 @@ export default function EditSenhaDiscente({ navigation, route }) {
                 })
             });
 
-            console.log(response)
 
             // const res = await response.json()
             // console.log(res)

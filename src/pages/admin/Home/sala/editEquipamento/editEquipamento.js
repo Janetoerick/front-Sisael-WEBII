@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text, SafeAreaView, TextInput, TouchableOpacity } from 'react-native'
 import styles from './styles'
+import { ip } from '../../../../../../infos'
 
 
 export default function EditEquipamento({ navigation, route }) {
@@ -13,7 +14,7 @@ export default function EditEquipamento({ navigation, route }) {
 
     const attEquipamento = async () => {
         try {
-            const uri = 'http://192.168.1.75:8080/equipamento/' + route.params.equipamento.id
+            const uri = ip + '/equipamento/' + route.params.equipamento.id
             const response = await fetch(uri, {
                 method: 'PUT',
                 headers: {

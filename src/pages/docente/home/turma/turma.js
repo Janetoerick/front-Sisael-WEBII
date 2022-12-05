@@ -5,6 +5,7 @@ import { View, Text, SafeAreaView, TouchableOpacity, FlatList, ActivityIndicator
 
 import { Feather } from '@expo/vector-icons'
 import styles from './style'
+import { ip } from '../../../../../infos'
 
 export default function TurmaDocente({ navigation, route }) {
 
@@ -32,7 +33,7 @@ export default function TurmaDocente({ navigation, route }) {
 
     const reserva_turma = async () => {
         try {
-            const uri = 'http://192.168.1.75:8080/reservaGrupal/turma/' + route.params.turma.id
+            const uri = ip + '/reservaGrupal/turma/' + route.params.turma.id
             const response = await fetch(uri, {
                 method: 'GET',
                 headers: {
@@ -59,7 +60,7 @@ export default function TurmaDocente({ navigation, route }) {
 
     const deleteReserva = async () => {
         try {
-            const uri = 'http://192.168.1.75:8080/reservaGrupal/' + reserva[0].id
+            const uri = ip + '/reservaGrupal/' + reserva[0].id
             const response = await fetch(uri, {
                 method: 'DELETE',
                 headers: {
@@ -78,7 +79,6 @@ export default function TurmaDocente({ navigation, route }) {
     }
 
     function viewModalDelete(){
-        console.log(reserva[0].id)
         setModalDelete(!modalDelete)
     }
 

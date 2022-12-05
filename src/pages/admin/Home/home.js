@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { View, Text, SafeAreaView, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native'
 
 import styles from './styles'
+import {ip} from '../../../../infos'
 
 export default function HomeAdmin({ navigation, route }) {
 
@@ -16,7 +17,7 @@ export default function HomeAdmin({ navigation, route }) {
     const list_salas = async () => {
         try {
             setLoadingSalas(true)
-            const uri = 'http://192.168.1.75:8080/sala'
+            const uri = ip + '/sala'
             const response = await fetch(uri, {
                 method: 'GET',
                 headers: {

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { View, Text, SafeAreaView, TouchableOpacity } from 'react-native'
 import { SelectList } from 'react-native-dropdown-select-list'
 import styles from './styles'
+import { ip } from '../../../../../../infos'
 
 import { Feather } from '@expo/vector-icons'
 
@@ -18,7 +19,7 @@ export default function AddReservaSala({ navigation, navigation: {goBack}, route
 
     const findLocaisESalas = async () => {
         try {
-            const uri = 'http://192.168.1.75:8080/sala/local/' + route.params.local
+            const uri = ip + '/sala/local/' + route.params.local
             const response = await fetch(uri, {
                 method: 'GET',
                 headers: {

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { View, Text, SafeAreaView, TouchableOpacity, FlatList, ActivityIndicator, Modal, Button } from 'react-native'
 
 import styles from './styles'
+import { ip } from '../../../../infos'
 
 import { Feather } from '@expo/vector-icons'
 
@@ -43,7 +44,7 @@ export default function HomeDiscente({ navigation, route }) {
 
     const list_reservas_grupal = async () => {
         try {
-            const uri = 'http://192.168.1.75:8080/reservaGrupal/aluno/' + route.params.credentials.login
+            const uri = ip + '/reservaGrupal/aluno/' + route.params.credentials.login
             const response = await fetch(uri, {
                 method: 'GET',
                 headers: {
@@ -68,7 +69,7 @@ export default function HomeDiscente({ navigation, route }) {
 
     const reserva_individual = async () => {
         try {
-            const uri = 'http://192.168.1.75:8080/reservaIndividual/aluno/login/' + route.params.credentials.login
+            const uri = ip + '/reservaIndividual/aluno/login/' + route.params.credentials.login
             const response = await fetch(uri, {
                 method: 'GET',
                 headers: {
@@ -96,7 +97,7 @@ export default function HomeDiscente({ navigation, route }) {
 
     const deleteReserva = async () => {
         try {
-            const uri = 'http://192.168.1.75:8080/reservaIndividual/' + reservaIndividual[0].id
+            const uri = ip + '/reservaIndividual/' + reservaIndividual[0].id
             const response = await fetch(uri, {
                 method: 'DELETE',
                 headers: {

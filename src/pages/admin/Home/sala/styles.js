@@ -9,48 +9,57 @@ const edit = "#FBB13C"
 const remove = "#D81E5B"
 
 const styles = StyleSheet.create({
-    page:{
+    page:{ // ====================================================================================
         flex:1,
         width:"100%",
         justifyContent:"flex-start",
     },
-    top:{
-        paddingTop:10,
-        alignItems:"center",
-        textAlign:"center",
-        backgroundColor:blue_munsell,
+    subPage:{ // --------------------------------------------------------------------
+        flex:1,
         width:"100%",
-        height:100,
+        justifyContent:"space-between",
     },
-    labelTop:{
-        paddingTop:25,
-        fontSize:26,
-        color:"#fff",
+    top:{ // ====================================================================================
+        flexDirection:"row",
+        paddingTop:40,
+        paddingLeft:10,
+        justifyContent:"center",
+        backgroundColor:"white",
+        width:"100%",
+        height:85,
     },
-    body:{
-        borderTopEndRadius:25,
+    viewButtonTop:{ // ====================================================================================
+        paddingTop:5,
+        width:"15%",
+        paddingLeft:3,
     },
-    barOptions:{
-        backgroundColor:blue_munsell,
+    viewLabelTop:{ // ====================================================================================
+        width:"85%",
     },
-    moduloReservas:{
+    labelTop:{ // ====================================================================================
+        fontSize:22,
+        color:"#000",
+        width:"80%",
+        fontWeight:"bold",
+    },
+    moduloReservas:{ // ====================================================================================
         height:150,
         width:"100%",
         alignItems:"center",
         paddingTop:15,
     },
-    textModulo:{
+    textModulo:{ // ====================================================================================
         textAlign:"center",
         paddingTop:5,
         paddingLeft:20,
         paddingRight:20,
     },
-    labelAgendar:{
+    labelAgendar:{ // ====================================================================================
         fontSize:18,
         fontWeight:"bold",
         color:"#655A7C",
     },
-    button:{
+    button:{ // ====================================================================================
         borderRadius: 50,
         alignItems: "center",
         justifyContent: "center",
@@ -68,26 +77,27 @@ const styles = StyleSheet.create({
         color:"white",
         fontSize:20,
     },
-    moduloVisualizar:{
+    moduloVisualizar:{ // ====================================================================================
         flex:1,
         width:"100%",
         alignItems:"center",
         paddingTop:90,
     },
-    viewVisualizarReserva:{
+    viewVisualizarReserva:{ // ====================================================================================
         width:"100%",
         alignItems:"center",
         justifyContent:"center",
         paddingTop:25,
     },
-    viewReservaTotal:{
+    viewReservaTotal:{ // ====================================================================================
         flexDirection:"row",
-        width:"90%",
+        width:"100%",
         height:60,
         alignItems:"center",
         justifyContent:"center",
         borderRadius:10,
         backgroundColor:blizzard_blue,
+        marginBottom:20,
     },
     viewInfoReserva:{
         paddingLeft:10,
@@ -114,18 +124,18 @@ const styles = StyleSheet.create({
         borderTopEndRadius:10,
         borderBottomEndRadius:10,
     },
-    textVisualizar:{
+    textVisualizar:{ // ====================================================================================
         width:280,
         alignItems:"center",
     },
-    viewReservasGrupal:{
+    viewReservasGrupal:{ // ====================================================================================
         width:"100%",
         paddingTop:30,
         alignItems:"center",
-        height:350,
+        height:500,
         minHeight:200,
     },
-    labelReserva:{
+    labelReserva:{ // ====================================================================================
         fontSize:18,
         fontWeight:"bold",
         color:"#655A7C",
@@ -153,23 +163,10 @@ const styles = StyleSheet.create({
         borderRadius:10,
         marginTop:15,
     },
-    view2ListReservas:{
-        paddingLeft:10,
-        width:350,
-    },
-    viewButtonReservas:{
-        width:70,
-        backgroundColor:blue_munsell,
-        height:60,
-        borderBottomEndRadius:10,
-        borderTopEndRadius:10,
-        justifyContent:"center",
-        alignItems:"center",
-    },
     textReservaGrupal:{
         fontSize:16,
     },
-    safeAreaModal:{
+    safeAreaModal:{ // ====================================================================================
         backgroundColor: "#000000aa",
         flex: 1
     },
@@ -183,48 +180,33 @@ const styles = StyleSheet.create({
         borderRadius: 10, 
 
     },
-    labelModal:{
-        fontSize: 26, 
-        textAlign: "center",
-        paddingBottom:10,
-        borderBottomWidth:0.5,
-        fontWeight:"bold",
-    },
-    tabelaModal:{
+    tabelaModal:{ // ====================================================================================
         flexDirection:"row",
         height:"70%",
         justifyContent:"center",
         alignItems:"center",
+        width:"80%",
     },
-    tabelaEsqModal:{
+    tabelaEsqModal:{ // ====================================================================================
         width:"50%",
     },
-    tabelaDirModal:{
+    tabelaDirModal:{ // ====================================================================================
         width:"50%",
     },
-    textModal:{
+    textModal:{ // ====================================================================================
         color:blue_munsell,
         fontSize:16,
         borderBottomWidth:0.5,
     },
-    infoModal:{
+    infoModal:{ // ====================================================================================
         textAlign:"right",
         fontSize:16,
         borderBottomWidth:0.5,
     },
-    buttonModal:{
-        borderRadius: 50,
-        alignItems: "center",
-        justifyContent: "center",
-        width:"100%",
-        backgroundColor:blue_munsell,
-        paddingTop:14,
-        paddingBottom:14,
-    },
-    textNaoReserva:{
+    textNaoReserva:{ // ====================================================================================
         color:"#FCB0B3",
     },
-    viewModalDelete:{
+    viewModalDelete:{ // ====================================================================================
         backgroundColor: "#ffffff",
         marginRight:30,
         marginLeft:30,
@@ -233,10 +215,10 @@ const styles = StyleSheet.create({
         padding: 40, 
         borderRadius: 10, 
     },
-    viewButtonDelete:{
+    viewButtonDelete:{ // ====================================================================================
         paddingTop:30,
     },
-    buttonModalDelete:{
+    buttonModalDelete:{ // ====================================================================================
         width:"100%",
         height:50,
         borderRadius:50,
@@ -244,7 +226,7 @@ const styles = StyleSheet.create({
         alignItems:"center",
         padding:15,
     },
-    buttonModalDeleteFechar:{
+    buttonModalDeleteFechar:{ // ====================================================================================
         width:"100%",
         height:50,
         borderRadius:50,
@@ -252,7 +234,14 @@ const styles = StyleSheet.create({
         alignItems:"center",
         padding:15,
         marginTop:10,
-    }
+    },
+    view2ListReservas:{
+        paddingLeft:10,
+        width:"80%",
+    },
+    textNaoReserva:{// --------------------------------------------------------------------
+        color:"#FCB0B3",
+    },
 });
 
 export default styles

@@ -6,8 +6,6 @@ import { View, Text, SafeAreaView, TouchableOpacity, FlatList, ActivityIndicator
 import { Feather } from '@expo/vector-icons'
 import styles from './style'
 
-//'8', '2022-12-20', '05:00:00', '01:00:00', '11'
-
 export default function TurmaDocente({ navigation, route }) {
 
     const [loadingReserva, setLoadingReserva] = useState(true)

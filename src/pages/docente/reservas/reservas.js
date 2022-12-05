@@ -142,19 +142,21 @@ export default function ReservasDocente({ navigation, route }) {
                                                 </View>
                                             </TouchableOpacity>
 
-                                            <TouchableOpacity
-                                                onPress={() => { navigation.navigate("Home",{
-                                                    screen: "TurmaDocente",
-                                                    params: {
-                                                        credentials: route.params.credentials,
-                                                        turma: item.turma
-                                                    }
-                                                })}}
+                                            {/* <TouchableOpacity
+                                                onPress={() => {
+                                                    navigation.navigate("Home", {
+                                                        screen: "PrincipalDocente",
+                                                        params: {
+                                                            credentials: route.params.credentials,
+                                                            turma: item.turma
+                                                        }
+                                                    })
+                                                }}
                                             >
                                                 <View style={styles.viewButtonReservas}>
                                                     <Feather name="chevron-right" color="#fff" size={26} />
                                                 </View>
-                                            </TouchableOpacity>
+                                            </TouchableOpacity> */}
 
                                         </View>
 

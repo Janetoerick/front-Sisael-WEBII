@@ -276,13 +276,13 @@ export default function HomeDiscente({ navigation, route }) {
                                             >
                                                 <View style={styles.view2ListReservas}>
                                                     <Text style={styles.textReservaGrupal}>
-                                                        <Text style={{ fontWeight: "bold" }}>Data:</Text>
+                                                        <Text style={{ fontWeight: "bold" }}>Data: </Text>
                                                         {
                                                             refatorarData(item.data)
                                                         }
                                                     </Text>
                                                     <Text style={styles.textReservaGrupal}>
-                                                        <Text style={{ fontWeight: "bold" }}>Horário:</Text>
+                                                        <Text style={{ fontWeight: "bold" }}>Horário: </Text>
                                                         {item.horarioInicial.slice(0, 5)}
                                                     </Text>
                                                 </View>

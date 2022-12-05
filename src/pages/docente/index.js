@@ -1,6 +1,6 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { createStackNavigator } from '@react-navigation/stack'
 
 import HomeDocente from './home/home'
 import ReservasDocente from './reservas/reservas'
@@ -12,22 +12,22 @@ import EditSenhaDocente from './configuracoes/editSenha'
 
 import { Feather } from '@expo/vector-icons'
 
-const Stack = createNativeStackNavigator()
+const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
 
 function HomePages({ route }) {
     return (
-        <Stack.Navigator>
-            <Stack.Screen name="PrincipalDocente" 
-            initialParams={{ credentials: route.params.credentials }} 
-            component={HomeDocente} 
-            options={{ headerShown: false }} />
-            <Stack.Screen name="TurmaDocente" 
-            component={TurmaDocente}
-            options={{ headerShown: false }}
+        <Stack.Navigator
+            initialRouteName='PrincipalDocente'
+        >
+            <Stack.Screen name="PrincipalDocente"
+                initialParams={{ credentials: route.params.credentials }}
+                component={HomeDocente}
+                options={{ headerShown: false }} />
+            <Stack.Screen name="Editar reserva" component={EditReserva} />
+            <Stack.Screen name="Adicionar reserva" component={AddReserva} />
+            <Stack.Screen name="TurmaDocente" component={TurmaDocente} options={{ headerShown: false }}
             />
-            <Stack.Screen name="Editar reserva" component={EditReserva}/>
-            <Stack.Screen name="Adicionar reserva" component={AddReserva}/>
         </Stack.Navigator>
     )
 
@@ -36,11 +36,11 @@ function HomePages({ route }) {
 function ConfigPages({ route }) {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="PrincipalConfig" 
-            initialParams={{ credentials: route.params.credentials }} 
-            component={ConfigDocente} 
-            options={{ headerShown: false }} />
-            <Stack.Screen name="Alterar senha" component={EditSenhaDocente}/>
+            <Stack.Screen name="PrincipalConfig"
+                initialParams={{ credentials: route.params.credentials }}
+                component={ConfigDocente}
+                options={{ headerShown: false }} />
+            <Stack.Screen name="Alterar senha" component={EditSenhaDocente} />
             {/* <Stack.Screen name="Adicionar reserva" component={AddReserva}/> */}
         </Stack.Navigator>
     )
@@ -53,7 +53,7 @@ export default function Docente({ route }) {
             tabBarStyle={{ backgroundColor: '#fff' }}
             screenOptions={{
                 tabBarShowLabel: false,
-                unmountOnBlur:true,
+                unmountOnBlur: true,
                 headerShown: false,
                 tabBarStyle: { borderTopColor: "#1985A1", backgroundColor: "#ffffff" },
             }}

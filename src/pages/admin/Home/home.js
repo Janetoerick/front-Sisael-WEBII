@@ -1,25 +1,22 @@
-import { StatusBar } from 'expo-status-bar'
 import React, { useState, useEffect } from 'react'
-import { View, Text, SafeAreaView, TouchableOpacity, FlatList, ActivityIndicator, Modal, Button } from 'react-native'
+import { View, Text, SafeAreaView, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native'
 
 import styles from './styles'
 
-import { Feather } from '@expo/vector-icons'
-
 export default function HomeAdmin({ navigation, route }) {
 
-    const [hasTurmas, setHasTurmas] = useState()
-    const [turmas, setTurmas] = useState([])
-    const [loadingTurmas, setLoadingTurmas] = useState(true)
+    const [hasSalas, setHasSalas] = useState()
+    const [salas, setsalas] = useState([])
+    const [loadingSalas, setLoadingSalas] = useState(true)
 
-    useEffect(() =>{
-        list_turmas()
+    useEffect(() => {
+        list_salas()
     }, [route]);
 
-    const list_turmas = async () => {
+    const list_salas = async () => {
         try {
-            setLoadingTurmas(true)
-            const uri = 'http://192.168.1.75:8080/turma/professor/' + route.params.credentials.login
+            setLoadingSalas(true)
+            const uri = 'http://192.168.1.75:8080/sala'
             const response = await fetch(uri, {
                 method: 'GET',
                 headers: {
@@ -28,24 +25,24 @@ export default function HomeAdmin({ navigation, route }) {
                     'Authorization': 'Bearer ' + route.params.credentials.token,
                 },
             });
-            const turmas = await response.json()
-            if (turmas[0] == null) {
-                setHasTurmas(false)
+            const salas = await response.json()
+            if (salas[0] == null) {
+                setHasSalas(false)
             } else {
-                setTurmas(turmas)
-                setHasTurmas(true)
+                setsalas(salas)
+                setHasSalas(true)
             }
         } catch (error) {
             console.error(error)
         } finally {
-            setLoadingTurmas(false)
+            setLoadingSalas(false)
         }
     }
 
-    function pageTurma(turma){
-        navigation.navigate("TurmaDocente", {
+    function pageSala(sala) {
+        navigation.navigate("pageSala", {
             credentials: route.params.credentials,
-            turma: turma
+            sala: sala
         })
     }
 
@@ -56,49 +53,63 @@ export default function HomeAdmin({ navigation, route }) {
             </View>
             <View style={styles.moduloReservasGrupal}>
                 {
-                    loadingTurmas
-                    ?
-                     <ActivityIndicator />
-                    :
-                    !hasTurmas
+                    loadingSalas
                         ?
-                        <View style={styles.viewReservasGrupal}>
-                            <Text style={styles.labelReserva}>Turmas</Text>
-                            <View style={{ paddingTop: 20 }}>
-                                <Text style={styles.textNaoReserva}>Você não está registrado em nenhuma turma no momento</Text>
-                            </View>
-                        </View>
+                        <ActivityIndicator />
                         :
-                        <View style={styles.viewReservasGrupal}>
-                            <Text style={styles.labelReserva}>Turmas</Text>
-                            <FlatList
-                                style={styles.listReservasGrupal}
-                                showsVerticalScrollIndicator={true}
-                                data={turmas}
-                                renderItem={({ item }) => {
-                                    return (
-                                        <TouchableOpacity
-                                            onPress={() => { pageTurma(item) }}
-                                        >
-                                            <View style={styles.viewListReservas}
+                        !hasSalas
+                            ?
+                            <View style={styles.viewReservasGrupal}>
+                                <View style={{ paddingTop: 20 }}>
+                                    <Text style={styles.textNaoReserva}>Não há salas no sistema</Text>
+                                </View>
+                            </View>
+                            :
+                            <View style={styles.viewReservasGrupal}>
+                                <Text style={styles.labelReserva}>Salas</Text>
+                                <FlatList
+                                    style={styles.listReservasGrupal}
+                                    showsVerticalScrollIndicator={true}
+                                    data={salas}
+                                    renderItem={({ item }) => {
+                                        return (
+                                            <TouchableOpacity
+                                                onPress={() => { pageSala(item) }}
                                             >
-                                                <View style={styles.view2ListReservas}>
-                                                    <Text>{item.descricao}</Text>
+                                                <View style={styles.viewListReservas}
+                                                >
+                                                    <View style={styles.view2ListReservas}>
+                                                        <Text>{item.local} - {item.nome}</Text>
+                                                    </View>
                                                 </View>
-                                            </View>
-                                        </TouchableOpacity>
+                                            </TouchableOpacity>
 
-                                    )
-                                }}
-                                key={(item) => {
-                                    return (item.id)
-                                }}
+                                        )
+                                    }}
+                                    key={(item) => {
+                                        return (item.id)
+                                    }}
 
-                            />
+                                />
 
-                        </View>
+                            </View>
 
                 }
+            </View>
+            <View style={styles.moduloReservas}>
+
+                <TouchableOpacity style={styles.button}
+                    disabled={false}
+                    onPress={() => {
+                        navigation.navigate("Adicionar sala", {
+                                credentials: route.params.credentials,
+                                sala: route.params.sala
+                            })
+                    }}
+                >
+                    <Text style={styles.buttonText}>Adicionar sala</Text>
+                </TouchableOpacity>
+
             </View>
         </SafeAreaView>
     )

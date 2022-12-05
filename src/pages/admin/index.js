@@ -7,6 +7,9 @@ import AddSala from './home/addSala'
 import PageSala from './home/sala/sala'
 import EditEquipamento from './home/sala/editEquipamento/editEquipamento'
 import AddEquipamento from './home/sala/addEquipamento/addEquipamento'
+import EditSenhaAdmin from './configuracoes/editSenha'
+
+import ConfigAdmin from './configuracoes/configuracoes'
 
 import { Feather } from '@expo/vector-icons'
 
@@ -32,18 +35,17 @@ function HomePages({ route }) {
 
 }
 
-// function ConfigPages({ route }) {
-//     return (
-//         <Stack.Navigator>
-//             <Stack.Screen name="PrincipalConfig" 
-//             initialParams={{ credentials: route.params.credentials }} 
-//             component={ConfigDocente} 
-//             options={{ headerShown: false }} />
-//             <Stack.Screen name="Alterar senha" component={EditSenhaDocente}/>
-//             {/* <Stack.Screen name="Adicionar reserva" component={AddReserva}/> */}
-//         </Stack.Navigator>
-//     )
-// }
+function ConfigPages({ route }) {
+    return (
+        <Stack.Navigator>
+            <Stack.Screen name="PrincipalConfig" 
+            initialParams={{ credentials: route.params.credentials }} 
+            component={ConfigAdmin} 
+            options={{ headerShown: false }} />
+            <Stack.Screen name="Alterar senha" component={EditSenhaAdmin}/>
+        </Stack.Navigator>
+    )
+}
 
 export default function Admin({ route }) {
 
@@ -64,7 +66,7 @@ export default function Admin({ route }) {
                 options={{
                     tabBarIcon: ({ color, size, focused }) => {
                         if (focused) {
-                            return <Feather name="home" color="#1985A1" size={28} />
+                            return <Feather name="home" color="#1985A1" size={30} />
                         }
                         return <Feather name="home" color="#000" size={26} />
                     },
@@ -83,19 +85,19 @@ export default function Admin({ route }) {
                     },
                 }}
             /> */}
-            {/* <Tab.Screen
+            <Tab.Screen
                 name="Configurações"
                 component={ConfigPages}
                 initialParams={{ credentials: route.params }}
                 options={{
                     tabBarIcon: ({ color, size, focused }) => {
                         if (focused) {
-                            return <Feather name="settings" color="#1985A1" size={28} />
+                            return <Feather name="user" color="#1985A1" size={30} />
                         }
-                        return <Feather name="settings" color="#000" size={26} />
+                        return <Feather name="user" color="#000" size={26} />
                     },
                 }}
-            /> */}
+            />
         </Tab.Navigator>
     )
 }

@@ -15,15 +15,23 @@ export default function ConfigDocente({ navigation, route }) {
                 <View style={styles.moduloButtons}>
 
 
-                    <TouchableOpacity style={styles.button} 
-                    disabled={true}
-                    onPress={() => {
-                        navigation.navigate("Alterar senha", {
-                            credentials: route.params.credentials
-                        })
-                    }}
+                    <TouchableOpacity style={styles.button}
+                        disabled={true}
+                        onPress={() => {
+                            navigation.navigate("Alterar senha", {
+                                credentials: route.params.credentials
+                            })
+                        }}
                     >
                         <Text style={styles.buttonText}>Alterar senha</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.button}
+                        onPress={() => {
+                            navigation.navigate("Login")
+                        }}
+                    >
+                        <Text style={styles.buttonText}>Logout</Text>
                     </TouchableOpacity>
                 </View>
 

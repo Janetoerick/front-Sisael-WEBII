@@ -25,6 +25,14 @@ export default function ConfigAdmin({ navigation, route }) {
                     >
                         <Text style={styles.buttonText}>Alterar senha</Text>
                     </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.button}
+                    onPress={() => {
+                        navigation.navigate("Login")
+                    }}
+                    >
+                        <Text style={styles.buttonText}>Logout</Text>
+                    </TouchableOpacity>
                 </View>
 
             </View>

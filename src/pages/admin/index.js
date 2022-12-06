@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import HomeAdmin from './home/home'
 import AddSala from './home/addSala'
+import EditSala from './home/editSala/editSala'
 import PageSala from './home/sala/sala'
 import EditEquipamento from './home/sala/editEquipamento/editEquipamento'
 import AddEquipamento from './home/sala/addEquipamento/addEquipamento'
@@ -28,6 +29,7 @@ function HomePages({ route }) {
             options={{ headerShown: false }}
             />
             <Stack.Screen name="Adicionar sala" component={AddSala}/>
+            <Stack.Screen name="Editar sala" component={EditSala}/>
             <Stack.Screen name="Editar equipamento" component={EditEquipamento}/>
             <Stack.Screen name="Adicionar equipamento" component={AddEquipamento}/>
         </Stack.Navigator>
@@ -66,9 +68,9 @@ export default function Admin({ route }) {
                 options={{
                     tabBarIcon: ({ color, size, focused }) => {
                         if (focused) {
-                            return <Feather name="home" color="#1985A1" size={30} />
+                            return <Feather name="settings" color="#1985A1" size={30} />
                         }
-                        return <Feather name="home" color="#000" size={26} />
+                        return <Feather name="settings" color="#000" size={26} />
                     },
                 }}
             />

@@ -32,6 +32,7 @@ export default function Login({ navigation }) {
                 })
             });
             const credentials = await response.json();
+
             setSenha(null)
             if (response.status != 200) {
                 setErro("Login ou senha inválido!")

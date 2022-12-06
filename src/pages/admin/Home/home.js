@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, SafeAreaView, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native'
+import { View, Text, SafeAreaView, TouchableOpacity, FlatList, ActivityIndicator, Modal } from 'react-native'
 
+import { Feather } from '@expo/vector-icons'
 import styles from './styles'
-import {ip} from '../../../../infos'
+import { ip } from '../../../../infos'
 
 export default function HomeAdmin({ navigation, route }) {
 
     const [hasSalas, setHasSalas] = useState()
     const [salas, setsalas] = useState([])
     const [loadingSalas, setLoadingSalas] = useState(true)
+
+    const [showModal, setShowModal] = useState(false)
+    const [salaDelete, setSalaDelete] = useState(null)
 
     useEffect(() => {
         list_salas()
@@ -38,6 +42,31 @@ export default function HomeAdmin({ navigation, route }) {
         } finally {
             setLoadingSalas(false)
         }
+    }
+
+    const deleteSala = async () => {
+        try {
+            const uri = ip + '/sala/' + salaDelete
+            const response = await fetch(uri, {
+                method: 'DELETE',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + route.params.credentials.token,
+                },
+            });
+
+        } catch (error) {
+            console.error(error)
+        } finally {
+            viewModalDelete(null)
+            list_salas()
+        }
+    }
+
+    function viewModalDelete(sala) {
+        setSalaDelete(sala)
+        setShowModal(!showModal)
     }
 
     function pageSala(sala) {
@@ -74,16 +103,42 @@ export default function HomeAdmin({ navigation, route }) {
                                     data={salas}
                                     renderItem={({ item }) => {
                                         return (
-                                            <TouchableOpacity
-                                                onPress={() => { pageSala(item) }}
-                                            >
-                                                <View style={styles.viewListReservas}
-                                                >
-                                                    <View style={styles.view2ListReservas}>
-                                                        <Text>{item.local} - {item.nome}</Text>
-                                                    </View>
+                                            <View style={styles.viewReservaTotal}>
+                                                <View style={styles.viewInfoReserva}>
+                                                    <TouchableOpacity
+                                                        onPress={() => { pageSala(item) }}
+                                                    >
+
+
+                                                        <View style={styles.view2ListReservas}
+                                                        >
+                                                            <Text style={styles.textReservaGrupal}>
+                                                                {item.local} - {item.nome}
+                                                            </Text>
+
+                                                        </View>
+                                                    </TouchableOpacity>
                                                 </View>
-                                            </TouchableOpacity>
+                                                <View style={styles.viewButtonsReserva}>
+                                                    <TouchableOpacity style={styles.buttonEditReserva}
+                                                        onPress={() => {
+                                                            navigation.navigate("Editar sala",
+                                                                {
+                                                                    credentials: route.params.credentials,
+                                                                    sala: item
+                                                                })
+                                                        }}
+                                                    >
+                                                        <Feather name="edit-2" color="#fff" size={20} />
+                                                    </TouchableOpacity>
+                                                    <TouchableOpacity style={styles.buttonRemoveReserva}
+                                                        onPress={() => { viewModalDelete(item.id) }}
+                                                    >
+                                                        <Feather name="trash-2" color="#fff" size={20} />
+                                                    </TouchableOpacity>
+                                                </View>
+                                            </View>
+
 
                                         )
                                     }}
@@ -103,15 +158,42 @@ export default function HomeAdmin({ navigation, route }) {
                     disabled={false}
                     onPress={() => {
                         navigation.navigate("Adicionar sala", {
-                                credentials: route.params.credentials,
-                                sala: route.params.sala
-                            })
+                            credentials: route.params.credentials,
+                            sala: route.params.sala
+                        })
                     }}
                 >
                     <Text style={styles.buttonText}>Adicionar sala</Text>
                 </TouchableOpacity>
 
             </View>
+
+            <Modal
+                transparent={true}
+                visible={showModal}
+            >
+                <SafeAreaView style={styles.safeAreaModal}>
+                    <View style={styles.viewModalDelete}>
+                        <Text style={{ fontSize: 16, textAlign: "center" }}>
+                            Tem certeza que deseja deletar a sala?
+                        </Text>
+                        <View style={styles.viewButtonDelete}>
+                            <TouchableOpacity style={styles.buttonModalDelete}
+                                onPress={() => { deleteSala() }}
+                            >
+                                <Text style={{ color: "white" }}>Deletar</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.buttonModalDeleteFechar}
+                                onPress={() => { viewModalDelete(null) }}
+                            >
+                                <Text style={{ color: "white" }}>Cancelar</Text>
+                            </TouchableOpacity>
+                        </View>
+
+                    </View>
+
+                </SafeAreaView>
+            </Modal >
         </SafeAreaView>
     )
 

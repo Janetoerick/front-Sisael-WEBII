@@ -99,7 +99,7 @@ export default function PageSala({ navigation, route }) {
                                 ?
                                 <View style={styles.viewReservasGrupal}>
                                     <View style={{ paddingTop: 20 }}>
-                                        <Text style={styles.textNaoReserva}>Não há Equipamentos na saka</Text>
+                                        <Text style={styles.textNaoReserva}>Não há Equipamentos na sala</Text>
                                     </View>
                                 </View>
                                 :

@@ -1,20 +1,23 @@
 import React, { useState } from 'react'
 import { View, Text, SafeAreaView, TextInput, TouchableOpacity } from 'react-native'
 import styles from './styles'
-import { ip } from '../../../../../../infos'
+import { ip } from '../../../../../infos'
 
 
-export default function EditEquipamento({ navigation, route }) {
+export default function EditSala({ navigation, route }) {
 
 
-    const [codigo, setCodigo] = useState(route.params.equipamento.codigo)
-    const [descricao, setDescricao] = useState(route.params.equipamento.descricao)
+    const [nome, setNome] = useState(route.params.sala.nome)
+    const [andar, setAndar] = useState(route.params.sala.andar)
+    const [descricao, setDescricao] = useState(route.params.sala.descricao)
+    const [local, setLocal] = useState(route.params.sala.local)
+
     const [erro, setErro] = useState(null)
 
 
-    const attEquipamento = async () => {
+    const attSala = async () => {
         try {
-            const uri = ip + '/equipamento/' + route.params.equipamento.id
+            const uri = ip + '/sala/' + route.params.sala.id
             const response = await fetch(uri, {
                 method: 'PUT',
                 headers: {
@@ -23,16 +26,16 @@ export default function EditEquipamento({ navigation, route }) {
                     'Authorization': 'Bearer ' + route.params.credentials.token
                 },
                 body: JSON.stringify({
-                    codigo: codigo,
+                    nome: nome,
+                    andar: andar,
                     descricao: descricao,
-                    sala: route.params.sala.id
+                    local: local
                 })
             });
             const res = await response.json();
             if (res.error == null) {
-                navigation.navigate("pageSala", {
-                    credentials: route.params.credentials,
-                    sala: route.params.sala,
+                navigation.navigate("PrincipalAdmin", {
+                    credentials: route.params.credentials
                 })
             } else {
                 setErro(res.message)
@@ -47,9 +50,18 @@ export default function EditEquipamento({ navigation, route }) {
             <View style={styles.container}>
                 <View style={styles.input}>
                     <View style={styles.inputView}>
-                        <Text style={styles.infoInput}>Código</Text>
+                        <Text style={styles.infoInput}>Nome</Text>
                         <View style={styles.valueInput}>
-                            <TextInput value={codigo.toString()} onChangeText={setCodigo} />
+                            <TextInput value={nome} onChangeText={setNome} />
+                        </View>
+
+                    </View>
+                </View>
+                <View style={styles.input}>
+                    <View style={styles.inputView}>
+                        <Text style={styles.infoInput}>Andar</Text>
+                        <View style={styles.valueInput}>
+                            <TextInput value={andar.toString()} onChangeText={setAndar} />
                         </View>
 
                     </View>
@@ -62,9 +74,17 @@ export default function EditEquipamento({ navigation, route }) {
                         </View>
                     </View>
                 </View>
+                <View style={styles.input}>
+                    <View style={styles.inputView}>
+                        <Text style={styles.infoInput}>Local</Text>
+                        <View style={styles.valueInput}>
+                            <Text style={styles.valueInputDisable}>{local}</Text>
+                        </View>
+                    </View>
+                </View>
                 <Text style={styles.erroText}>{erro}</Text>
                 <TouchableOpacity style={styles.button}
-                    onPress={attEquipamento}
+                    onPress={attSala}
                 >
                     <Text style={styles.buttonText}>Atualizar</Text>
                 </TouchableOpacity>

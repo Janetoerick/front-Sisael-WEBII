@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
     form:{
         width:"100%",
         height:"auto",
+        alignItems:"center",
     },
     labelForm:{
         color:blue_munsell,
@@ -43,7 +44,6 @@ const styles = StyleSheet.create({
         backgroundColor:blue_munsell,
         paddingTop:14,
         paddingBottom:14,
-        marginLeft:12,
         marginTop:30,
     },
     buttonText:{

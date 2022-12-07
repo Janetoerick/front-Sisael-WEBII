@@ -17,14 +17,18 @@ const styles = StyleSheet.create({
     },
     container:{
         width:"90%",
+        alignItems:"center",
     },
     input: {
         width:"90%",
-        borderRadius:50,
+        borderWidth:1,
+        borderRadius:10,
+        borderColor:"gray",
         backgroundColor:"#f6f6f6",
-        height:40,
+        height:47,
         margin:12,
         backgroundColor:blizzard_blue,
+
     },
     inputView:{
         flex:1,

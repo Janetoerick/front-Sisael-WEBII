@@ -192,8 +192,70 @@ const styles = StyleSheet.create({
         borderBottomEndRadius:10,
     },
     textReservaGrupal:{
-        fontWeight:"bold"
-    }
+        fontWeight:"bold",
+    },
+    labelModal:{
+        fontSize: 26, 
+        textAlign: "center",
+        paddingBottom:10,
+        fontWeight:"bold",
+    },
+    tabelaModal:{
+        height:"70%",
+        justifyContent:"flex-start",
+        alignItems:"center",
+    },
+    tabelaProfessorModal:{
+        flexDirection:"row",
+        width:"100%",
+        alignItems:"center",
+        paddingTop:10,
+    },
+    textModalProfessor:{
+        color:blue_munsell,
+        fontSize:16,
+        width:"30%"
+    },
+    infoModalProfessor:{
+        fontSize:16,
+        color:"black"
+    },
+    tabelaAlunosModal:{
+        width:"100%",
+        paddingTop:20,
+        flexDirection:"row"
+    },
+    textModalAluno:{
+        width:"30%",
+        color:blue_munsell,
+        fontSize:16,
+    },
+    infoModalAluno:{
+        width:"60%",
+        backgroundColor:"#dcdcdc",
+        borderRadius:10,
+        height:150,
+        padding:15,
+
+    },
+    buttonModalVoltar:{
+        width:"100%",
+        height:50,
+        borderRadius:50,
+        backgroundColor:remove,
+        alignItems:"center",
+        padding:15,
+        marginTop:10,
+    },
+    viewModalEdit:{ 
+        backgroundColor: "#ffffff",
+        marginRight:30,
+        marginLeft:30,
+        marginTop:200,
+        marginBottom:160,
+        padding: 40, 
+        borderRadius: 10, 
+    },
 });
 
 export default styles

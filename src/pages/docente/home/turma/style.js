@@ -135,8 +135,6 @@ const styles = StyleSheet.create({
         fontSize:18,
         fontWeight:"bold",
         color:"#655A7C",
-        paddingBottom:10,
-        borderBottomWidth:0.5,
     },
     moduloReservasGrupal:{
         width:"100%",

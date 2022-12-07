@@ -76,7 +76,7 @@ export default function EditSala({ navigation, route }) {
                 </View>
                 <View style={styles.input}>
                     <View style={styles.inputView}>
-                        <Text style={styles.infoInput}>Local</Text>
+                        <Text style={styles.infoInputDisable}>Local</Text>
                         <View style={styles.valueInput}>
                             <Text style={styles.valueInputDisable}>{local}</Text>
                         </View>

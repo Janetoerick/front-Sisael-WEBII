@@ -6,21 +6,20 @@ import { ip } from '../../../../../infos'
 
 import { Feather } from '@expo/vector-icons'
 
-export default function AddReservaLocal({ navigation, route }) {
+export default function AddTurmaDocente({ navigation, navigation: { goBack }, route }) {
 
-    const [local, setLocal] = useState()
-    const [localSala, setLocalSala] = useState([])
-    const [selectedLocal, setSelectedLocal] = useState("")
+    const [professorTurma, setProfessorTurma] = useState([])
+    const [selectedProfessor, setSelectedProfessor] = useState("")
 
     const [erro, setErro] = useState("")
 
     useEffect(() => {
         findLocaisESalas()
-    })
+    }, [route])
 
     const findLocaisESalas = async () => {
         try {
-            const uri = ip + '/sala/'
+            const uri = ip + '/usuario/professor'
             const response = await fetch(uri, {
                 method: 'GET',
                 headers: {
@@ -31,19 +30,11 @@ export default function AddReservaLocal({ navigation, route }) {
             });
             const res = await response.json();
 
-            let list = localSala
-            let locais = []
-            if (list.length == 0) {
-                res.forEach(element => {
-                    let temp = { key: element.local, value: element.local }
-                    if (!(locais.includes(temp.value))) {
-                        list.push(temp)
-                        locais.push(temp.value)
-                        setLocalSala(list)
-                    }
-                });
-                list = localSala
-            }
+            res.forEach(element => {
+                let temp = { key: element.login, value: element.login }
+                professorTurma.push(temp)
+            });
+
 
         } catch (error) {
             console.error(error)
@@ -51,33 +42,43 @@ export default function AddReservaLocal({ navigation, route }) {
     }
 
     const navigate = () => {
-        //console.log(selectedLocal)
         setErro("")
-        if (selectedLocal != "") {
-            navigation.navigate("findSala", {
+        if (selectedProfessor != "") {
+            navigation.navigate("findDiscentes", {
                 credentials: route.params.credentials,
-                local: selectedLocal
+                descricao: route.params.descricao,
+                professor: selectedProfessor
             })
         } else {
-            setErro("Preencha o local que deseja fazer uma reserva")
+            setErro("Preencha o professor para a turma")
         }
 
     }
 
     return (
         <SafeAreaView style={styles.page}>
+
+
             <View style={styles.container}>
-                <SelectList data={localSala}
+                <SelectList data={professorTurma}
                     setSelected={(val) =>
-                        setSelectedLocal(val)
+                        setSelectedProfessor(val)
                     }
-                    placeholder="Selecione o local"
+                    placeholder="Selecione o professor"
                     maxHeight={150}
                     boxStyles={{ width: "70%" }}
                     inputStyles={{ width: "100%" }}
                 />
                 <Text style={styles.textErro}>{erro}</Text>
+
                 <View style={styles.viewButtons}>
+                    <TouchableOpacity style={styles.buttonBack}
+                        onPress={() => {
+                            goBack()
+                        }}
+                    >
+                        <Feather name="chevron-left" color="#fff" size={20} />
+                    </TouchableOpacity>
                     <TouchableOpacity style={styles.button}
                         onPress={() => {
                             navigate()
@@ -86,9 +87,11 @@ export default function AddReservaLocal({ navigation, route }) {
                         <Feather name="chevron-right" color="#fff" size={20} />
                     </TouchableOpacity>
                 </View>
-
             </View>
+
         </SafeAreaView>
 
     )
+
 }
+

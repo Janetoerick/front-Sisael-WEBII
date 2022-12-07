@@ -39,11 +39,12 @@ const styles = StyleSheet.create({
     },
     infoInput:{
         width:"30%",
-        color:"white",
+        color:"black",
         borderRightWidth:1,
         borderColor:"gray",
         textAlign:"center",
         paddingRight:20,
+        paddingTop:3,
     },
     valueInput:{
         width:"60%",
@@ -61,19 +62,27 @@ const styles = StyleSheet.create({
     button:{
         borderRadius: 50,
         alignItems: "center",
-        justifyContent: "center",
         width:"90%",
         backgroundColor:blue_munsell,
         paddingTop:14,
         paddingBottom:14,
-        marginLeft:12,
         marginTop:30,
     },
     buttonText:{
         color:"white",
     },
+    infoInputDisable:{
+        width:"30%",
+        color:"gray",
+        borderRightWidth:1,
+        borderColor:"gray",
+        textAlign:"center",
+        paddingRight:20,
+        paddingTop:3,
+    },
     valueInputDisable:{
-        color:"gray"
+        color:"gray",
+        paddingTop:3,
     }
 });
 

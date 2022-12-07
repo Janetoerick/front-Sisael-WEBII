@@ -15,7 +15,7 @@ export default function ConfigDocente({ navigation, route }) {
                 <View style={styles.moduloButtons}>
 
 
-                    <TouchableOpacity style={styles.button}
+                    {/* <TouchableOpacity style={styles.button}
                         disabled={true}
                         onPress={() => {
                             navigation.navigate("Alterar senha", {
@@ -24,7 +24,7 @@ export default function ConfigDocente({ navigation, route }) {
                         }}
                     >
                         <Text style={styles.buttonText}>Alterar senha</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
 
                     <TouchableOpacity style={styles.button}
                         onPress={() => {

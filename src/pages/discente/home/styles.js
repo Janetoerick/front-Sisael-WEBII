@@ -130,7 +130,6 @@ const styles = StyleSheet.create({
         fontWeight:"bold",
         color:"#655A7C",
         paddingBottom:10,
-        borderBottomWidth:0.5,
     },
     moduloReservasGrupal:{
         width:"100%",
@@ -178,7 +177,6 @@ const styles = StyleSheet.create({
         fontSize: 26, 
         textAlign: "center",
         paddingBottom:10,
-        borderBottomWidth:0.5,
         fontWeight:"bold",
     },
     tabelaModal:{

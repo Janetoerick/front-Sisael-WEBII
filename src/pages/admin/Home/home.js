@@ -4,12 +4,17 @@ import { View, Text, SafeAreaView, TouchableOpacity, FlatList, ActivityIndicator
 import { Feather } from '@expo/vector-icons'
 import styles from './styles'
 import { ip } from '../../../../infos'
+import { TextInput } from 'react-native-gesture-handler'
 
 export default function HomeAdmin({ navigation, route }) {
 
     const [hasSalas, setHasSalas] = useState()
-    const [salas, setsalas] = useState([])
+    const [salas, setSalas] = useState([])
     const [loadingSalas, setLoadingSalas] = useState(true)
+    const [loadingSearch, setLoadingSearch] = useState(false)
+
+    const [search, setSearch] = useState([])
+    const [salasSearch, setSalasSearch] = useState([])
 
     const [showModal, setShowModal] = useState(false)
     const [salaDelete, setSalaDelete] = useState(null)
@@ -17,6 +22,10 @@ export default function HomeAdmin({ navigation, route }) {
     useEffect(() => {
         list_salas()
     }, [route]);
+
+    useEffect(() => {
+        salasSearch
+    }, [search]);
 
     const list_salas = async () => {
         try {
@@ -30,12 +39,13 @@ export default function HomeAdmin({ navigation, route }) {
                     'Authorization': 'Bearer ' + route.params.credentials.token,
                 },
             });
-            const salas = await response.json()
-            if (salas[0] == null) {
+            const s = await response.json()
+            if (s[0] == null) {
                 setHasSalas(false)
             } else {
-                setsalas(salas)
+                setSalas(s)
                 setHasSalas(true)
+                setSalasSearch(s)
             }
         } catch (error) {
             console.error(error)
@@ -70,10 +80,25 @@ export default function HomeAdmin({ navigation, route }) {
     }
 
     function pageSala(sala) {
+        setSearch("")
         navigation.navigate("pageSala", {
             credentials: route.params.credentials,
             sala: sala
         })
+    }
+
+    function searchTable() {
+        setLoadingSearch(true)
+
+        var list = []
+        salas.map(item => {
+            if ((item.nome.toLowerCase().includes(search.toLowerCase()) ||
+                item.local.toLowerCase().includes(search.toLowerCase()))) {
+                list.push(item)
+            }
+        })
+        setSalasSearch(list)
+        setLoadingSearch(false)
     }
 
     return (
@@ -97,56 +122,75 @@ export default function HomeAdmin({ navigation, route }) {
                             :
                             <View style={styles.viewReservasGrupal}>
                                 <Text style={styles.labelReserva}>Salas</Text>
-                                <FlatList
-                                    style={styles.listReservasGrupal}
-                                    showsVerticalScrollIndicator={true}
-                                    data={salas}
-                                    renderItem={({ item }) => {
-                                        return (
-                                            <View style={styles.viewReservaTotal}>
-                                                <View style={styles.viewInfoReserva}>
-                                                    <TouchableOpacity
-                                                        onPress={() => { pageSala(item) }}
-                                                    >
+                                <View style={styles.viewSearch}>
+                                    <TextInput placeholder='Pesquisar' value={search}
+                                        onChangeText={setSearch} style={styles.inputSearch}/>
+                                    <TouchableOpacity style={styles.buttonSearch}
+                                        onPress={() => { searchTable() }}
+                                    >
+                                        <Feather name="search" color="#fff" size={20} />
+                                    </TouchableOpacity>
+                                </View>
+                                {loadingSearch
+                                    ?
+                                    <ActivityIndicator />
+                                    :
+                                    <FlatList
+                                        style={styles.listReservasGrupal}
+                                        showsVerticalScrollIndicator={true}
+                                        data={salasSearch}
+                                        renderItem={({ item }) => {
+                                            return (
 
-
-                                                        <View style={styles.view2ListReservas}
+                                                <View style={styles.viewReservaTotal}>
+                                                    <View style={styles.viewInfoReserva}>
+                                                        <TouchableOpacity
+                                                            onPress={() => { pageSala(item) }}
                                                         >
-                                                            <Text style={styles.textReservaGrupal}>
-                                                                {item.local} - {item.nome}
-                                                            </Text>
 
-                                                        </View>
-                                                    </TouchableOpacity>
+
+                                                            <View style={styles.view2ListReservas}
+                                                            >
+                                                                <Text style={styles.textReservaGrupal}>
+                                                                    {item.local}
+                                                                </Text>
+                                                                <Text>
+                                                                    {item.nome}
+                                                                </Text>
+
+                                                            </View>
+                                                        </TouchableOpacity>
+                                                    </View>
+                                                    <View style={styles.viewButtonsReserva}>
+                                                        <TouchableOpacity style={styles.buttonEditReserva}
+                                                            onPress={() => {
+                                                                navigation.navigate("Editar sala",
+                                                                    {
+                                                                        credentials: route.params.credentials,
+                                                                        sala: item
+                                                                    })
+                                                            }}
+                                                        >
+                                                            <Feather name="edit-2" color="#fff" size={20} />
+                                                        </TouchableOpacity>
+                                                        <TouchableOpacity style={styles.buttonRemoveReserva}
+                                                            onPress={() => { viewModalDelete(item.id) }}
+                                                        >
+                                                            <Feather name="trash-2" color="#fff" size={20} />
+                                                        </TouchableOpacity>
+                                                    </View>
                                                 </View>
-                                                <View style={styles.viewButtonsReserva}>
-                                                    <TouchableOpacity style={styles.buttonEditReserva}
-                                                        onPress={() => {
-                                                            navigation.navigate("Editar sala",
-                                                                {
-                                                                    credentials: route.params.credentials,
-                                                                    sala: item
-                                                                })
-                                                        }}
-                                                    >
-                                                        <Feather name="edit-2" color="#fff" size={20} />
-                                                    </TouchableOpacity>
-                                                    <TouchableOpacity style={styles.buttonRemoveReserva}
-                                                        onPress={() => { viewModalDelete(item.id) }}
-                                                    >
-                                                        <Feather name="trash-2" color="#fff" size={20} />
-                                                    </TouchableOpacity>
-                                                </View>
-                                            </View>
 
 
-                                        )
-                                    }}
-                                    key={(item) => {
-                                        return (item.id)
-                                    }}
+                                            )
+                                        }}
+                                        key={(item) => {
+                                            return (item.id)
+                                        }}
 
-                                />
+                                    />
+
+                                }
 
                             </View>
 
